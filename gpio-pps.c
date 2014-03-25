@@ -48,22 +48,21 @@ static struct platform_device pps_gpio_device = {
     .dev = { .platform_data = &pps_gpio_info },
 };
 
-static int __init spi_config_init(void)
+static int __init gpio_config_init(void)
 {
     pps_gpio_info.gpio_pin = pin;
     platform_device_register(&pps_gpio_device);
     return 0;
 }
-module_init(spi_config_init)
+module_init(gpio_config_init)
 
-static void __exit spi_config_exit(void)
+static void __exit gpio_config_exit(void)
 {
 	/* unregister devices */
     platform_device_unregister(&pps_gpio_device);
 	/* and return */
 }
-module_exit(spi_config_exit);
-
+module_exit(gpio_config_exit);
 
 /* the module description */
 MODULE_DESCRIPTION("bind gpio pin to pps");
