@@ -34,7 +34,15 @@
 /* the module parameters */
 static unsigned pin;
 module_param(pin, uint, 17);
-MODULE_PARM_DESC(cs, "gpio pin number for pps");
+MODULE_PARM_DESC(pin, "gpio pin number for pps");
+
+static bool afe;
+module_param(afe, bool, false);
+MODULE_PARM_DESC(afe, "assert falling edge");
+
+static bool cc;
+module_param(cc, bool, false);
+MODULE_PARM_DESC(cc, "capture clear");
 
 static struct pps_gpio_platform_data pps_gpio_info = {
     .assert_falling_edge = false,
@@ -51,6 +59,8 @@ static struct platform_device pps_gpio_device = {
 static int __init gpio_config_init(void)
 {
     pps_gpio_info.gpio_pin = pin;
+    pps_gpio_info.assert_falling_edge = afe;
+    pps_gpio_info.capture_clear = cc;
     platform_device_register(&pps_gpio_device);
     return 0;
 }
